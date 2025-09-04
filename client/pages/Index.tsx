@@ -287,11 +287,7 @@ export default function Index() {
             TRINDATA
           </h2>
           <div className="flex-1 w-full md:w-auto">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F6f3d7143f55e40d1a198b877b696dd3b%2Fed8d08539312432dbdcc231ad716c234?format=webp&width=800"
-              alt="Header TrinData com mockup"
-              className="w-full max-w-md mx-auto rounded-xl shadow-2xl"
-            />
+            <MockTablet />
           </div>
         </div>
       </section>
