@@ -3,6 +3,77 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+// High-quality vector tablet mockup with charts
+const MockTablet = () => (
+  <svg viewBox="0 0 360 720" className="w-full max-w-md mx-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TrinData tablet mockup with charts">
+    <defs>
+      <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#e9f2fb"/>
+        <stop offset="100%" stopColor="#d7e6f6"/>
+      </linearGradient>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#000" floodOpacity="0.25"/>
+      </filter>
+    </defs>
+    {/* Tablet body */}
+    <rect x="10" y="10" rx="28" ry="28" width="340" height="700" fill="#ffffff" filter="url(#shadow)"/>
+    {/* Top bar */}
+    <rect x="22" y="24" rx="12" width="316" height="44" fill="#f6f7fb"/>
+    <circle cx="44" cy="46" r="6" fill="#d2d6e6"/>
+    <rect x="58" y="36" rx="8" width="60" height="20" fill="#e9ebf5"/>
+    <rect x="290" y="34" rx="8" width="48" height="24" fill="#6C5CE7"/>
+    <text x="302" y="50" fontFamily="Inter, system-ui, Arial" fontSize="10" fill="#fff">Sign in</text>
+
+    {/* Screen */}
+    <rect x="22" y="80" rx="12" width="316" height="590" fill="url(#screenGrad)"/>
+
+    {/* Title */}
+    <text x="180" y="120" textAnchor="middle" fontFamily="Inter, system-ui, Arial" fontWeight="800" fontSize="22" fill="#2d3436">TrindaTa</text>
+    <text x="180" y="144" textAnchor="middle" fontFamily="Inter, system-ui, Arial" fontSize="14" fill="#2d3436">
+      <tspan fill="#e84393" fontWeight="700">Soluções</tspan> para dados
+    </text>
+    <text x="180" y="166" textAnchor="middle" fontFamily="Inter, system-ui, Arial" fontSize="10" fill="#657082">To create any grid by scaling and
+    </text>
+    <text x="180" y="178" textAnchor="middle" fontFamily="Inter, system-ui, Arial" fontSize="10" fill="#657082">resizing</text>
+
+    {/* Grid cards */}
+    <rect x="84" y="198" rx="8" width="54" height="48" fill="#e8b23a"/>
+    <rect x="146" y="198" rx="8" width="54" height="48" fill="#b9cde4"/>
+    <rect x="208" y="198" rx="8" width="54" height="48" fill="#e3542a"/>
+
+    <rect x="84" y="254" rx="8" width="54" height="48" fill="#b38ad6"/>
+    <rect x="146" y="254" rx="8" width="54" height="48" fill="#e3542a"/>
+    <rect x="208" y="254" rx="8" width="54" height="48" fill="#b9cde4"/>
+
+    {/* Charts area */}
+    {/* Bar chart */}
+    <g transform="translate(60,330)">
+      <rect x="0" y="0" width="240" height="110" rx="12" fill="#ffffff" stroke="#e6ecf4"/>
+      <rect x="20" y="70" width="24" height="30" fill="#6C5CE7" rx="4"/>
+      <rect x="54" y="50" width="24" height="50" fill="#00B894" rx="4"/>
+      <rect x="88" y="30" width="24" height="70" fill="#0984E3" rx="4"/>
+      <rect x="122" y="56" width="24" height="44" fill="#FFEAA7" rx="4"/>
+      <rect x="156" y="20" width="24" height="80" fill="#E84393" rx="4"/>
+      <rect x="190" y="42" width="24" height="58" fill="#F26B38" rx="4"/>
+    </g>
+
+    {/* Pie chart */}
+    <g transform="translate(60,452)">
+      <rect x="0" y="0" width="240" height="110" rx="12" fill="#ffffff" stroke="#e6ecf4"/>
+      <circle cx="65" cy="56" r="36" fill="#eaeff6"/>
+      <path d="M65,56 L65,20 A36,36 0 0,1 96,47 Z" fill="#6C5CE7"/>
+      <path d="M65,56 L96,47 A36,36 0 1,1 35,82 Z" fill="#00B894"/>
+      <rect x="130" y="28" width="90" height="12" rx="6" fill="#6C5CE7"/>
+      <rect x="130" y="48" width="70" height="12" rx="6" fill="#00B894"/>
+      <rect x="130" y="68" width="86" height="12" rx="6" fill="#0984E3"/>
+    </g>
+
+    {/* Scroll dot */}
+    <circle cx="180" cy="662" r="12" fill="#ffffff" stroke="#e6ecf4"/>
+    <path d="M174 660 L180 666 L186 660" stroke="#9aa3b2" strokeWidth="2" fill="none"/>
+  </svg>
+);
+
 // Icon components for the design
 const LeafIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor">
