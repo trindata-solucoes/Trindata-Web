@@ -57,6 +57,18 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* TrinData brand colors */
+    --trindata-orange: 14 91% 51%;
+    --trindata-orange-light: 22 93% 58%;
+    --trindata-yellow: 45 93% 58%;
+    --trindata-yellow-light: 48 96% 65%;
+    --trindata-purple: 280 40% 70%;
+    --trindata-purple-light: 285 45% 80%;
+    --trindata-cream: 35 15% 88%;
+    --trindata-cream-light: 40 20% 93%;
+    --trindata-burgundy: 0 45% 35%;
+    --trindata-background-light: 35 25% 95%;
   }
 
   .dark {
@@ -95,6 +107,18 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* TrinData brand colors - dark mode */
+    --trindata-orange: 14 91% 51%;
+    --trindata-orange-light: 22 93% 58%;
+    --trindata-yellow: 45 93% 58%;
+    --trindata-yellow-light: 48 96% 65%;
+    --trindata-purple: 280 40% 70%;
+    --trindata-purple-light: 285 45% 80%;
+    --trindata-cream: 35 15% 88%;
+    --trindata-cream-light: 40 20% 93%;
+    --trindata-burgundy: 0 45% 35%;
+    --trindata-background-light: 35 25% 15%;
   }
 }
 
