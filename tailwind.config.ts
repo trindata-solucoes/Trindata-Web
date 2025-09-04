@@ -68,6 +68,8 @@ export default {
           cream: "hsl(var(--trindata-cream))",
           "cream-light": "hsl(var(--trindata-cream-light))",
           burgundy: "hsl(var(--trindata-burgundy))",
+          blue: "hsl(var(--trindata-blue))",
+          "blue-light": "hsl(var(--trindata-blue-light))",
           "background-light": "hsl(var(--trindata-background-light))",
         },
       },
