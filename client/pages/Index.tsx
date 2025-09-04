@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 // Icon components for the design
 const LeafIcon = ({ className }: { className?: string }) => (
@@ -21,9 +22,29 @@ const StarIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const FlowerIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-    <path d="M12,2A3,3 0 0,1 15,5V8A3,3 0 0,1 12,11A3,3 0 0,1 9,8V5A3,3 0 0,1 12,2M19,5A3,3 0 0,1 22,8V11A3,3 0 0,1 19,14A3,3 0 0,1 16,11V8A3,3 0 0,1 19,5M5,5A3,3 0 0,1 8,8V11A3,3 0 0,1 5,14A3,3 0 0,1 2,11V8A3,3 0 0,1 5,5M12,12A3,3 0 0,1 15,15V18A3,3 0 0,1 12,21A3,3 0 0,1 9,18V15A3,3 0 0,1 12,12Z"/>
+const ChartIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M3 3v18h18"/>
+    <path d="m19 9-5 5-4-4-3 3"/>
+  </svg>
+);
+
+const ZapIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/>
+  </svg>
+);
+
+const ThumbsUpIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M7 10v12"/>
+    <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h3.73a2 2 0 0 1 1.92 2.56z"/>
+  </svg>
+);
+
+const PhoneIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
   </svg>
 );
 
@@ -33,180 +54,398 @@ interface ProductCardProps {
   bgColor: string;
   textColor?: string;
   size?: 'default' | 'large';
+  description?: string;
 }
 
-const ProductCard = ({ title, icon, bgColor, textColor = 'text-gray-800', size = 'default' }: ProductCardProps) => {
-  const cardSize = size === 'large' ? 'col-span-2 h-32' : 'h-24';
+const ProductCard = ({ title, icon, bgColor, textColor = 'text-gray-800', size = 'default', description }: ProductCardProps) => {
+  const cardSize = size === 'large' ? 'col-span-2 h-40' : 'h-32';
   
   return (
-    <Card className={`${bgColor} ${cardSize} border-0 shadow-sm hover:shadow-md transition-shadow cursor-pointer group`}>
-      <CardContent className="p-4 h-full flex flex-col justify-between">
+    <Card className={`${bgColor} ${cardSize} border-0 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group hover:scale-105`}>
+      <CardContent className="p-6 h-full flex flex-col justify-between">
         <div className="flex justify-between items-start">
-          <div className={`${textColor} text-sm font-medium leading-tight`}>
+          <div className={`${textColor} text-base font-semibold leading-tight`}>
             {title}
           </div>
-          <div className={`${textColor} opacity-60 group-hover:opacity-100 transition-opacity`}>
+          <div className={`${textColor} opacity-70 group-hover:opacity-100 transition-opacity`}>
             {icon}
           </div>
         </div>
+        {description && (
+          <p className={`${textColor} text-sm opacity-80 mt-2`}>
+            {description}
+          </p>
+        )}
       </CardContent>
     </Card>
   );
 };
 
+const FeatureCard = ({ icon, title, description, bgColor }: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  bgColor: string;
+}) => (
+  <div className="flex flex-col items-center text-center">
+    <div className={`w-16 h-16 ${bgColor} rounded-full flex items-center justify-center mb-4 shadow-lg`}>
+      <div className="text-trindata-cream-light">
+        {icon}
+      </div>
+    </div>
+    <h3 className="text-xl font-bold text-trindata-burgundy mb-3">{title}</h3>
+    <p className="text-gray-600 text-sm leading-relaxed mb-4">{description}</p>
+    <Button variant="outline" className="border-trindata-purple text-trindata-purple hover:bg-trindata-purple hover:text-white transition-colors">
+      Saiba mais
+    </Button>
+  </div>
+);
+
 const TrinDataLogo = () => (
   <div className="flex items-center gap-3">
-    <div className="w-12 h-12 bg-trindata-burgundy rounded-lg flex items-center justify-center">
-      <div className="text-white font-bold text-xl transform rotate-12">P</div>
+    <div className="w-10 h-10 bg-trindata-burgundy rounded-lg flex items-center justify-center">
+      <div className="text-white font-bold text-lg transform rotate-12">P</div>
     </div>
     <div>
-      <h1 className="text-2xl font-bold text-trindata-burgundy">TRINDATA</h1>
+      <h1 className="text-xl font-bold text-trindata-burgundy">TRINDATA</h1>
     </div>
   </div>
 );
 
 export default function Index() {
-  const [selectedPlan] = useState('starter');
+  const [activePlan, setActivePlan] = useState('pro');
 
-  const productCards = [
-    // First row
-    { title: 'Templates\nGratitude', icon: <LeafIcon className="w-5 h-5" />, bgColor: 'bg-trindata-cream' },
-    { title: 'Dashboard', icon: <CircleIcon className="w-5 h-5" />, bgColor: 'bg-trindata-orange text-white', textColor: 'text-white' },
-    { title: 'Notion', icon: <CircleIcon className="w-5 h-5" />, bgColor: 'bg-trindata-orange text-white', textColor: 'text-white' },
-    
-    // Second row
-    { title: 'Tutorials', icon: <FlowerIcon className="w-5 h-5" />, bgColor: 'bg-trindata-yellow' },
-    { title: 'Plantihan', icon: <LeafIcon className="w-5 h-5" />, bgColor: 'bg-trindata-orange text-white', textColor: 'text-white' },
-    { title: 'Controle de\ntarefas', icon: <StarIcon className="w-5 h-5" />, bgColor: 'bg-trindata-yellow' },
-    { title: 'Gestão\nfinanceira', icon: <CircleIcon className="w-5 h-5" />, bgColor: 'bg-trindata-purple text-white', textColor: 'text-white' },
+  const productShowcase = [
+    { 
+      title: 'Dashboard Financeiro', 
+      icon: <ChartIcon className="w-6 h-6" />, 
+      bgColor: 'bg-trindata-orange text-white', 
+      textColor: 'text-white',
+      description: 'Visualize suas finanças de forma clara'
+    },
+    { 
+      title: 'Templates Notion', 
+      icon: <LeafIcon className="w-6 h-6" />, 
+      bgColor: 'bg-trindata-cream',
+      description: 'Modelos prontos para organização'
+    },
+    { 
+      title: 'Planejamento', 
+      icon: <StarIcon className="w-6 h-6" />, 
+      bgColor: 'bg-trindata-yellow',
+      description: 'Organize suas tarefas e metas'
+    },
+    { 
+      title: 'Power BI', 
+      icon: <ZapIcon className="w-6 h-6" />, 
+      bgColor: 'bg-trindata-purple text-white', 
+      textColor: 'text-white',
+      description: 'Dashboards profissionais'
+    },
+  ];
+
+  const pricingPlans = [
+    {
+      name: 'Starter',
+      price: 'Grátis',
+      period: '',
+      description: 'Para estudantes iniciantes',
+      features: [
+        'Templates básicos',
+        'Dashboard simples',
+        'Suporte por email',
+        'Tutoriais básicos'
+      ],
+      buttonText: 'Começar grátis',
+      popular: false
+    },
+    {
+      name: 'Pro',
+      price: 'R$ 29',
+      period: '/mês',
+      description: 'Para estudantes avançados',
+      features: [
+        'Todos os templates',
+        'Dashboards avançados',
+        'Suporte prioritário',
+        'Personalizações',
+        'Exportação ilimitada'
+      ],
+      buttonText: 'Assinar Pro',
+      popular: true
+    },
+    {
+      name: 'Premium',
+      price: 'R$ 49',
+      period: '/mês',
+      description: 'Para grupos e equipes',
+      features: [
+        'Tudo do Pro',
+        'Templates exclusivos',
+        'Consultoria 1:1',
+        'Criação personalizada',
+        'Acesso antecipado'
+      ],
+      buttonText: 'Assinar Premium',
+      popular: false
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-trindata-background-light">
-      {/* Header */}
-      <header className="p-6">
-        <TrinDataLogo />
+    <div className="min-h-screen bg-white">
+      {/* Modern Navigation Header */}
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <TrinDataLogo />
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#como-funciona" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Como funciona</a>
+            <a href="#produtos" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Produtos</a>
+            <a href="#precos" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Preços</a>
+            <a href="#contato" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Contato</a>
+          </nav>
+          <Button className="bg-trindata-purple hover:bg-trindata-purple-light text-white">
+            Começar
+          </Button>
+        </div>
       </header>
 
-      {/* Main Content */}
-      <div className="px-6 pb-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-trindata-burgundy mb-4">
-            Transformando dados e rotinas em decisões inteligentes
-          </h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
-            Templates e dashboards prontos para estudantes: veja suas finanças e tarefas com clareza e tome decisões com confiança.
-          </p>
-        </div>
+      {/* Modern Hero Section */}
+      <section className="relative bg-gradient-to-br from-trindata-background-light to-trindata-cream-light py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-6xl font-bold text-trindata-burgundy mb-6">
+              Combine <span className="text-trindata-orange">dados</span> inteligentes
+            </h1>
+            <h2 className="text-2xl md:text-3xl text-gray-700 mb-8">
+              Para representar seus objetivos
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+              Use grades mistas com imagens, substitua por suas próprias fotos e descrições. 
+              Templates e dashboards prontos para estudantes.
+            </p>
+            <Button className="bg-trindata-orange hover:bg-trindata-orange-light text-white text-lg px-8 py-4 rounded-xl">
+              Conhecer produtos
+            </Button>
+          </div>
 
-        {/* Product Grid */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            {productCards.map((card, index) => (
+          {/* Product Showcase Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" id="produtos">
+            {productShowcase.map((product, index) => (
               <ProductCard
                 key={index}
-                title={card.title}
-                icon={card.icon}
-                bgColor={card.bgColor}
-                textColor={card.textColor}
+                title={product.title}
+                icon={product.icon}
+                bgColor={product.bgColor}
+                textColor={product.textColor}
+                description={product.description}
               />
             ))}
           </div>
 
-          {/* Large product cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {/* Large Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ProductCard
-              title="Controle de tarefas"
-              icon={<StarIcon className="w-6 h-6" />}
+              title="Controle financeiro completo"
+              icon={<ChartIcon className="w-8 h-8" />}
               bgColor="bg-trindata-yellow"
               size="large"
+              description="Dashboards que ajudam estudantes a entender e controlar suas finanças pessoais"
             />
             <ProductCard
-              title="Gestão financeira"
-              icon={<CircleIcon className="w-6 h-6" />}
+              title="Gestão de rotina acadêmica"
+              icon={<StarIcon className="w-8 h-8" />}
               bgColor="bg-trindata-purple text-white"
               textColor="text-white"
               size="large"
+              description="Organize estudos, prazos e atividades com clareza e eficiência"
             />
           </div>
         </div>
+      </section>
 
-        {/* Bottom Section */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl p-8 shadow-sm">
-            <div className="text-center mb-8">
-              <TrinDataLogo />
-            </div>
+      {/* Features Section */}
+      <section className="py-20 bg-white" id="como-funciona">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-trindata-burgundy mb-4">
+              Criando soluções desde 2024 🚀✨
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Somos as primeiras soluções de kit de design multipropósito para estudantes. 
+              Ajudamos você a conectar seus layouts, templates e desenvolvedores para capacitar todos os envolvidos.
+            </p>
+          </div>
 
-            {/* Product Selection */}
-            <div className="mb-8">
-              <h3 className="text-sm font-medium text-gray-600 mb-4">CHOICE BOARD TITLE</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="bg-trindata-orange text-white border-0 h-24">
-                  <CardContent className="p-4 h-full flex items-center justify-center">
-                    <span className="text-sm font-medium">Add a Link</span>
-                  </CardContent>
-                </Card>
-                <Card className="bg-trindata-yellow border-0 h-24">
-                  <CardContent className="p-4 h-full flex items-center justify-center">
-                    <span className="text-sm font-medium">Add a Link</span>
-                  </CardContent>
-                </Card>
-                <Card className="bg-trindata-cream border-0 h-24">
-                  <CardContent className="p-4 h-full flex items-center justify-center">
-                    <span className="text-sm font-medium">Add a Link</span>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <FeatureCard
+              icon={<PhoneIcon className="w-8 h-8" />}
+              title="Suporte"
+              description="Oferecendo suporte mais rápido e personalizado com telas compartilhadas e sistemas de design inteligentes"
+              bgColor="bg-trindata-orange"
+            />
+            <FeatureCard
+              icon={<ChartIcon className="w-8 h-8" />}
+              title="Crescimento acadêmico"
+              description="Identificamos estudantes qualificados com chat ao vivo fácil de usar e Bot de IA educacional"
+              bgColor="bg-trindata-purple"
+            />
+            <FeatureCard
+              icon={<ZapIcon className="w-8 h-8" />}
+              title="Baseado em componentes"
+              description="Oferecendo suporte mais rápido e personalizado com telas compartilhadas e sistemas de design inteligentes"
+              bgColor="bg-trindata-yellow"
+            />
+            <FeatureCard
+              icon={<ThumbsUpIcon className="w-8 h-8" />}
+              title="Fácil personalização"
+              description="Você pode alternar qualquer ícone dentro das Instâncias e personalizar o traço para mais ousado ou mais claro"
+              bgColor="bg-trindata-cream"
+            />
+          </div>
+        </div>
+      </section>
 
-            {/* Today's Agenda Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-2xl font-bold text-trindata-burgundy mb-4">Today's Agenda</h3>
-                <p className="text-gray-600 mb-6">
-                  Organize your day by checking your tasks, appointments and setting reminders for better productivity and organization
-                </p>
-                <div className="space-y-3">
-                  <Button variant="outline" className="w-full justify-start text-left">
-                    Schedule Meeting
+      {/* Pricing Section */}
+      <section className="py-20 bg-trindata-background-light" id="precos">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-trindata-burgundy mb-4">
+              Preços acessíveis
+            </h2>
+            <p className="text-gray-600 mb-8">
+              Escolha <span className="text-trindata-purple font-semibold">mensal</span> • anual
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {pricingPlans.map((plan, index) => (
+              <Card key={index} className={`relative ${plan.popular ? 'ring-2 ring-trindata-purple shadow-xl scale-105' : ''} hover:shadow-lg transition-all duration-300`}>
+                {plan.popular && (
+                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-trindata-purple text-white">
+                    MAIS POPULAR
+                  </Badge>
+                )}
+                <CardContent className="p-8">
+                  <div className="text-center mb-8">
+                    <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">
+                      {plan.description}
+                    </h3>
+                    <div className="mb-4">
+                      <span className="text-4xl font-bold text-trindata-burgundy">{plan.price}</span>
+                      <span className="text-gray-500">{plan.period}</span>
+                    </div>
+                    <h4 className="text-xl font-semibold text-trindata-burgundy">{plan.name}</h4>
+                  </div>
+
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm">
+                        <svg className="w-4 h-4 text-trindata-orange mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button 
+                    className={`w-full ${plan.popular 
+                      ? 'bg-trindata-purple hover:bg-trindata-purple-light text-white' 
+                      : 'bg-trindata-cream hover:bg-trindata-cream-light text-trindata-burgundy border border-trindata-burgundy'
+                    }`}
+                  >
+                    {plan.buttonText}
                   </Button>
-                  <Button variant="outline" className="w-full justify-start text-left">
-                    Activities
-                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-white" id="contato">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Contact Info */}
+            <div>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                SIGA-NOS
+              </p>
+              <div className="flex space-x-4 mb-12">
+                <div className="w-10 h-10 bg-trindata-cream rounded-full flex items-center justify-center">
+                  <span className="text-trindata-purple text-sm">f</span>
+                </div>
+                <div className="w-10 h-10 bg-trindata-cream rounded-full flex items-center justify-center">
+                  <span className="text-trindata-purple text-sm">in</span>
+                </div>
+                <div className="w-10 h-10 bg-trindata-cream rounded-full flex items-center justify-center">
+                  <span className="text-trindata-purple text-sm">@</span>
+                </div>
+                <div className="w-10 h-10 bg-trindata-cream rounded-full flex items-center justify-center">
+                  <span className="text-trindata-purple text-sm">tw</span>
                 </div>
               </div>
 
-              <Card className="bg-trindata-orange text-white border-0">
-                <CardContent className="p-6">
-                  <h4 className="text-xl font-bold mb-3">Reminder</h4>
-                  <p className="text-sm mb-4 opacity-90">
-                    Help the students remember deadlines, test dates, and assignments, reducing stress and improving their organization
-                  </p>
-                </CardContent>
-              </Card>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                INFORMAÇÕES
+              </p>
+              <div className="space-y-3 text-sm text-gray-600">
+                <a href="#" className="block hover:text-trindata-burgundy transition-colors">Sobre a TrinData</a>
+                <a href="#" className="block hover:text-trindata-burgundy transition-colors">Entre em contato</a>
+                <a href="#" className="block hover:text-trindata-burgundy transition-colors">Coisas que gostamos</a>
+                <a href="#" className="block hover:text-trindata-burgundy transition-colors">Política de privacidade</a>
+                <a href="#" className="block hover:text-trindata-burgundy transition-colors">Termos de serviço</a>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                ENTRE EM CONTATO
+              </p>
+              <h3 className="text-3xl font-bold text-trindata-purple mb-8">
+                contato@trindata.com
+              </h3>
+
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Seu nome"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-trindata-purple"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      placeholder="E-mail"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-trindata-purple"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <textarea
+                    placeholder="Deixe sua mensagem"
+                    rows={4}
+                    className="w-full px-4 py-3 bg-gray-50 border-2 border-trindata-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-trindata-purple text-trindata-purple font-medium"
+                  />
+                </div>
+                <Button className="bg-trindata-purple hover:bg-trindata-purple-light text-white px-8 py-3 text-lg">
+                  ENVIAR
+                </Button>
+              </form>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* CTA Section */}
-        <div className="text-center mt-16">
-          <h3 className="text-2xl font-bold text-trindata-burgundy mb-4">
-            Pronto para transformar seus dados?
-          </h3>
-          <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
-            Comece hoje mesmo com nossos templates e dashboards. Clareza para decidir, economia de tempo, rotina menos estressante.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-trindata-orange hover:bg-trindata-orange-light text-white px-8 py-3">
-              Começar Agora
-            </Button>
-            <Button variant="outline" className="border-trindata-burgundy text-trindata-burgundy px-8 py-3">
-              Ver Demos
-            </Button>
-          </div>
-        </div>
+      {/* Footer Wave */}
+      <div className="relative">
+        <svg className="w-full h-24" viewBox="0 0 1440 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M-0.333822 104L-0.583526 19.1366C-0.583526 19.1366 102.172 51.726 220.913 19.2075C339.654 -13.311 399.901 4.67057 565.331 61.0554C730.762 117.44 808.875 9.45977 1046 52.0384C1283.12 94.6171 1251.81 -44.9066 1439.77 19.611C1439.81 97.8883 1440.01 485.507 1440.04 104C1295.17 104 -0.333822 104 -0.333822 104Z" fill="hsl(var(--trindata-yellow-light))"/>
+        </svg>
       </div>
     </div>
   );
