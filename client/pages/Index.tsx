@@ -161,12 +161,14 @@ const FeatureCard = ({ icon, title, description, bgColor }: {
 
 const TrinDataLogo = () => (
   <div className="flex items-center gap-3">
-    <div className="w-10 h-10 bg-trindata-burgundy rounded-lg flex items-center justify-center">
-      <div className="text-white font-bold text-lg transform rotate-12">P</div>
-    </div>
-    <div>
-      <h1 className="text-xl font-bold text-trindata-burgundy">TRINDATA</h1>
-    </div>
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets%2F6f3d7143f55e40d1a198b877b696dd3b%2Fb66cee802beb48f29a64a356687f9bd4?format=webp&width=200"
+      alt="TRINDATA logo"
+      className="h-8 w-auto md:h-10 select-none"
+      loading="eager"
+      decoding="async"
+    />
+    <h1 className="text-xl font-bold text-trindata-burgundy">TRINDATA</h1>
   </div>
 );
 
