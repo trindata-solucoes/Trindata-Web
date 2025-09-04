@@ -192,7 +192,7 @@ export default function Index() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-trindata-blue-light">
       {/* Modern Navigation Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -210,7 +210,7 @@ export default function Index() {
       </header>
 
       {/* Modern Hero Section */}
-      <section className="relative bg-gradient-to-br from-trindata-background-light to-trindata-cream-light py-20">
+      <section className="relative bg-gradient-to-br from-trindata-blue-light to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-trindata-burgundy mb-6">
@@ -281,7 +281,7 @@ export default function Index() {
               icon={<PhoneIcon className="w-8 h-8" />}
               title="Suporte"
               description="Oferecendo suporte mais rápido e personalizado com telas compartilhadas e sistemas de design inteligentes"
-              bgColor="bg-trindata-orange"
+              bgColor="bg-trindata-blue"
             />
             <FeatureCard
               icon={<ChartIcon className="w-8 h-8" />}
@@ -306,7 +306,7 @@ export default function Index() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 bg-trindata-background-light" id="precos">
+      <section className="py-20 bg-trindata-blue-light" id="precos">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-trindata-burgundy mb-4">
