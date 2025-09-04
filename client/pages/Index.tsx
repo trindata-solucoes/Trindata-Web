@@ -209,6 +209,22 @@ export default function Index() {
         </div>
       </header>
 
+      {/* Promo Header Section (as requested) */}
+      <section className="bg-trindata-ochre py-12">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-white tracking-wide drop-shadow-sm flex-1">
+            TRINDATA
+          </h2>
+          <div className="flex-1 w-full md:w-auto">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F6f3d7143f55e40d1a198b877b696dd3b%2Fed8d08539312432dbdcc231ad716c234?format=webp&width=800"
+              alt="Header TrinData com mockup"
+              className="w-full max-w-md mx-auto rounded-xl shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Modern Hero Section */}
       <section className="relative bg-gradient-to-br from-trindata-blue-light to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
