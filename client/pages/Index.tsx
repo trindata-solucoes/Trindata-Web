@@ -444,11 +444,11 @@ export default function Index() {
         <div className="relative z-10 w-full mx-auto px-6 py-8">
           <div className="grid md:grid-cols-2 items-center gap-12 min-h-[720px]">
             <div>
-              <div className="text-white font-[800] text-6xl md:text-8xl tracking-wider drop-shadow-sm">
+              <div className="text-white font-extrabold text-[96px] leading-[96px] tracking-[4.8px] drop-shadow-sm">
                 TRINDATA
               </div>
             </div>
-            <div className="relative">
+            <div className="relative flex flex-col justify-end items-center">
               {/* Browser-like card */}
               <div className="mx-auto max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
                 <div className="flex items-center justify-between border-b border-slate-200 p-4">
