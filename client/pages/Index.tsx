@@ -269,6 +269,65 @@ export default function Index() {
         </div>
       </header>
 
+      {/* Ochre Hero Section (per diff) */}
+      <section className="relative overflow-hidden bg-trindata-ochre min-h-[720px]">
+        {/* Decorative dots at top-right */}
+        <div className="absolute right-48 top-12 opacity-30">
+          <div className="grid grid-cols-6 gap-4">
+            {Array.from({ length: 30 }).map((_, i) => (
+              <div key={i} className="w-2 h-2 rounded-full bg-white/70" />
+            ))}
+          </div>
+        </div>
+        {/* Rotated rounded shape */}
+        <div className="absolute -left-80 top-32 w-96 h-96 bg-white/20 rounded-3xl rotate-45" />
+
+        <div className="relative z-10 w-full mx-auto px-6 py-8">
+          <div className="grid md:grid-cols-2 items-center gap-12 min-h-[720px]">
+            <div>
+              <div className="text-white font-[800] text-6xl md:text-8xl tracking-wider drop-shadow-sm">TRINDATA</div>
+            </div>
+            <div className="relative">
+              {/* Browser-like card */}
+              <div className="mx-auto max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
+                <div className="flex items-center justify-between border-b border-slate-200 p-4">
+                  <div className="flex items-center text-slate-600">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-600"><path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z"></path><path d="M20.054 15.987H3.946"></path></svg>
+                    <div className="ml-3 text-xl font-bold">Grid</div>
+                  </div>
+                  <div className="bg-slate-800 text-white text-sm font-bold rounded-lg px-4 py-2">Sign In</div>
+                </div>
+                <div className="p-6 bg-gradient-to-b from-[#b8d4e3] to-transparent">
+                  <div className="text-center">
+                    <div className="text-slate-800 text-3xl font-black">TrindaTa</div>
+                    <h3 className="mt-4 text-[28px] font-bold"><span className="text-[#d2522c]">Soluções</span><span className="text-slate-800"> para dados</span></h3>
+                    <div className="mt-4 text-slate-800 text-base font-semibold max-w-xs mx-auto">To create any grid by scaling and resizing</div>
+                    <div className="mt-4 inline-block rounded-full bg-[#a8c8d9]/40 px-4 py-1" />
+                  </div>
+
+                  {/* Tiles */}
+                  <div className="mt-8 grid grid-cols-3 gap-3">
+                    <div className="aspect-square rounded-md bg-trindata-ochre" />
+                    <div className="aspect-[3/4] rounded-md bg-[#a8c8d8]" />
+                    <div className="aspect-square rounded-md bg-[#d2522c]" />
+                    <div className="aspect-[4/3] rounded-md bg-[#b19cd9]" />
+                    <div className="aspect-square rounded-md bg-[#e5633d]" />
+                    <div className="aspect-[3/4] rounded-md bg-[#b8d4e3]" />
+                  </div>
+
+                  {/* Bars */}
+                  <div className="mt-6 flex justify-center">
+                    <button className="backdrop-blur rounded-full border-2 border-[#a088c9] p-3 bg-white/30">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#a088c9] rotate-90"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Modern Hero Section */}
       <section className="relative bg-gradient-to-br from-trindata-blue-light to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
