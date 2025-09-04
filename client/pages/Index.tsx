@@ -4,8 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 // High-quality vector tablet mockup with charts
-const MockTablet = () => (
-  <svg viewBox="0 0 360 720" className="w-full max-w-md mx-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TrinData tablet mockup with charts">
+const MockTablet = ({ className = "w-full max-w-md mx-auto drop-shadow-2xl" }: { className?: string }) => (
+  <svg viewBox="0 0 360 720" className={className} xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TrinData tablet mockup with charts">
     <defs>
       <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#e9f2fb"/>
@@ -46,26 +46,13 @@ const MockTablet = () => (
     <rect x="208" y="254" rx="8" width="54" height="48" fill="#b9cde4"/>
 
     {/* Charts area */}
-    {/* Bar chart */}
-    <g transform="translate(60,330)">
-      <rect x="0" y="0" width="240" height="110" rx="12" fill="#ffffff" stroke="#e6ecf4"/>
-      <rect x="20" y="70" width="24" height="30" fill="#6C5CE7" rx="4"/>
-      <rect x="54" y="50" width="24" height="50" fill="#00B894" rx="4"/>
-      <rect x="88" y="30" width="24" height="70" fill="#0984E3" rx="4"/>
-      <rect x="122" y="56" width="24" height="44" fill="#FFEAA7" rx="4"/>
-      <rect x="156" y="20" width="24" height="80" fill="#E84393" rx="4"/>
-      <rect x="190" y="42" width="24" height="58" fill="#F26B38" rx="4"/>
-    </g>
-
-    {/* Pie chart */}
-    <g transform="translate(60,452)">
-      <rect x="0" y="0" width="240" height="110" rx="12" fill="#ffffff" stroke="#e6ecf4"/>
-      <circle cx="65" cy="56" r="36" fill="#eaeff6"/>
-      <path d="M65,56 L65,20 A36,36 0 0,1 96,47 Z" fill="#6C5CE7"/>
-      <path d="M65,56 L96,47 A36,36 0 1,1 35,82 Z" fill="#00B894"/>
-      <rect x="130" y="28" width="90" height="12" rx="6" fill="#6C5CE7"/>
-      <rect x="130" y="48" width="70" height="12" rx="6" fill="#00B894"/>
-      <rect x="130" y="68" width="86" height="12" rx="6" fill="#0984E3"/>
+    {/* Bar chart (reduced) */}
+    <g transform="translate(60,360)">
+      <rect x="0" y="0" width="240" height="90" rx="12" fill="#ffffff" stroke="#e6ecf4"/>
+      <rect x="28" y="50" width="28" height="38" fill="#6C5CE7" rx="4"/>
+      <rect x="76" y="34" width="28" height="54" fill="#00B894" rx="4"/>
+      <rect x="124" y="20" width="28" height="68" fill="#0984E3" rx="4"/>
+      <rect x="172" y="42" width="28" height="46" fill="#F26B38" rx="4"/>
     </g>
 
     {/* Scroll dot */}
@@ -287,7 +274,9 @@ export default function Index() {
             TRINDATA
           </h2>
           <div className="flex-1 w-full md:w-auto">
-            <MockTablet />
+            <div className="origin-top-right scale-50">
+              <MockTablet className="w-full max-w-md mx-auto drop-shadow-2xl" />
+            </div>
           </div>
         </div>
       </section>
