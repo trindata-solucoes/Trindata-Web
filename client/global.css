@@ -71,6 +71,7 @@
     --trindata-background-light: 35 25% 95%;
     --trindata-blue: 210 80% 86%;
     --trindata-blue-light: 210 90% 96%;
+    --trindata-ochre: 41 66% 43%;
   }
 
   .dark {
@@ -123,6 +124,7 @@
     --trindata-background-light: 35 25% 15%;
     --trindata-blue: 210 60% 30%;
     --trindata-blue-light: 210 60% 20%;
+    --trindata-ochre: 41 66% 30%;
   }
 }
 
