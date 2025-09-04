@@ -269,20 +269,6 @@ export default function Index() {
         </div>
       </header>
 
-      {/* Promo Header Section (as requested) */}
-      <section className="bg-trindata-ochre py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
-          <h2 className="text-5xl md:text-6xl font-extrabold text-white tracking-wide drop-shadow-sm flex-1">
-            TRINDATA
-          </h2>
-          <div className="flex-1 w-full md:w-auto">
-            <div className="origin-top-right scale-50">
-              <MockTablet className="w-full max-w-md mx-auto drop-shadow-2xl" />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Modern Hero Section */}
       <section className="relative bg-gradient-to-br from-trindata-blue-light to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
