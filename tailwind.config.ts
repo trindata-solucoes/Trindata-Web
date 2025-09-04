@@ -71,6 +71,7 @@ export default {
           blue: "hsl(var(--trindata-blue))",
           "blue-light": "hsl(var(--trindata-blue-light))",
           "background-light": "hsl(var(--trindata-background-light))",
+          ochre: "hsl(var(--trindata-ochre))",
         },
       },
       borderRadius: {
