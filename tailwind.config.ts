@@ -57,6 +57,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // TrinData brand colors
+        trindata: {
+          orange: "hsl(var(--trindata-orange))",
+          "orange-light": "hsl(var(--trindata-orange-light))",
+          yellow: "hsl(var(--trindata-yellow))",
+          "yellow-light": "hsl(var(--trindata-yellow-light))",
+          purple: "hsl(var(--trindata-purple))",
+          "purple-light": "hsl(var(--trindata-purple-light))",
+          cream: "hsl(var(--trindata-cream))",
+          "cream-light": "hsl(var(--trindata-cream-light))",
+          burgundy: "hsl(var(--trindata-burgundy))",
+          "background-light": "hsl(var(--trindata-background-light))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
