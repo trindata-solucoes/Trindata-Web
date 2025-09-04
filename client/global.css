@@ -69,6 +69,8 @@
     --trindata-cream-light: 40 20% 93%;
     --trindata-burgundy: 0 45% 35%;
     --trindata-background-light: 35 25% 95%;
+    --trindata-blue: 210 80% 86%;
+    --trindata-blue-light: 210 90% 96%;
   }
 
   .dark {
@@ -119,6 +121,8 @@
     --trindata-cream-light: 40 20% 93%;
     --trindata-burgundy: 0 45% 35%;
     --trindata-background-light: 35 25% 15%;
+    --trindata-blue: 210 60% 30%;
+    --trindata-blue-light: 210 60% 20%;
   }
 }
 
