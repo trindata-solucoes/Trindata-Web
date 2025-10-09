@@ -410,6 +410,12 @@ export default function Index() {
               Produtos
             </a>
             <a
+              href="/projetos"
+              className="text-gray-600 hover:text-trindata-burgundy transition-colors"
+            >
+              Projetos
+            </a>
+            <a
               href="#precos"
               className="text-gray-600 hover:text-trindata-burgundy transition-colors"
             >
