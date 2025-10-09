@@ -14,16 +14,32 @@ const TrinDataLogo = () => (
   </div>
 );
 
-const SummaryCard = ({ label, value, delta, color }: { label: string; value: string; delta?: string; color: string }) => (
+const SummaryCard = ({
+  label,
+  value,
+  delta,
+  color,
+}: {
+  label: string;
+  value: string;
+  delta?: string;
+  color: string;
+}) => (
   <Card className="border-0 shadow-md">
     <CardHeader className="pb-2">
-      <CardTitle className="text-sm font-medium text-gray-500">{label}</CardTitle>
+      <CardTitle className="text-sm font-medium text-gray-500">
+        {label}
+      </CardTitle>
     </CardHeader>
     <CardContent className="pt-0">
       <div className="flex items-end justify-between">
         <div className="text-3xl font-bold text-trindata-burgundy">{value}</div>
         {delta && (
-          <span className={`text-xs font-semibold px-2 py-1 rounded-full ${color}`}>{delta}</span>
+          <span
+            className={`text-xs font-semibold px-2 py-1 rounded-full ${color}`}
+          >
+            {delta}
+          </span>
         )}
       </div>
     </CardContent>
@@ -39,7 +55,10 @@ const BarChart = ({ data }: { data: { label: string; value: number }[] }) => {
           const height = Math.round((d.value / max) * 100);
           return (
             <div key={i} className="flex flex-col items-center gap-2">
-              <div className="w-full rounded-md bg-gradient-to-t from-trindata-purple to-trindata-purple-light" style={{ height: `${height}%` }} />
+              <div
+                className="w-full rounded-md bg-gradient-to-t from-trindata-purple to-trindata-purple-light"
+                style={{ height: `${height}%` }}
+              />
               <div className="text-[10px] text-gray-500">{d.label}</div>
             </div>
           );
@@ -50,11 +69,46 @@ const BarChart = ({ data }: { data: { label: string; value: number }[] }) => {
 };
 
 const transactions = [
-  { id: 1, date: "05/10", desc: "Salário", category: "Renda", amount: 4200, type: "in" },
-  { id: 2, date: "07/10", desc: "Aluguel", category: "Moradia", amount: -1500, type: "out" },
-  { id: 3, date: "09/10", desc: "Mercado", category: "Alimentação", amount: -520, type: "out" },
-  { id: 4, date: "11/10", desc: "Transporte App", category: "Transporte", amount: -86, type: "out" },
-  { id: 5, date: "12/10", desc: "Freelance", category: "Renda", amount: 800, type: "in" },
+  {
+    id: 1,
+    date: "05/10",
+    desc: "Salário",
+    category: "Renda",
+    amount: 4200,
+    type: "in",
+  },
+  {
+    id: 2,
+    date: "07/10",
+    desc: "Aluguel",
+    category: "Moradia",
+    amount: -1500,
+    type: "out",
+  },
+  {
+    id: 3,
+    date: "09/10",
+    desc: "Mercado",
+    category: "Alimentação",
+    amount: -520,
+    type: "out",
+  },
+  {
+    id: 4,
+    date: "11/10",
+    desc: "Transporte App",
+    category: "Transporte",
+    amount: -86,
+    type: "out",
+  },
+  {
+    id: 5,
+    date: "12/10",
+    desc: "Freelance",
+    category: "Renda",
+    amount: 800,
+    type: "in",
+  },
 ];
 
 export default function Projetos() {
@@ -73,8 +127,14 @@ export default function Projetos() {
     { label: "Dez", value: 1580 },
   ];
 
-  const totalIn = transactions.filter(t=>t.type==='in').reduce((s,t)=>s+t.amount,0);
-  const totalOut = Math.abs(transactions.filter(t=>t.type==='out').reduce((s,t)=>s+t.amount,0));
+  const totalIn = transactions
+    .filter((t) => t.type === "in")
+    .reduce((s, t) => s + t.amount, 0);
+  const totalOut = Math.abs(
+    transactions
+      .filter((t) => t.type === "out")
+      .reduce((s, t) => s + t.amount, 0),
+  );
   const balance = totalIn - totalOut;
 
   return (
@@ -85,32 +145,84 @@ export default function Projetos() {
             <TrinDataLogo />
           </a>
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="/#como-funciona" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Como funciona</a>
-            <a href="/#produtos" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Produtos</a>
-            <a href="/projetos" className="text-trindata-burgundy font-semibold">Projetos</a>
-            <a href="/#precos" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Preços</a>
-            <a href="/#contato" className="text-gray-600 hover:text-trindata-burgundy transition-colors">Contato</a>
+            <a
+              href="/#como-funciona"
+              className="text-gray-600 hover:text-trindata-burgundy transition-colors"
+            >
+              Como funciona
+            </a>
+            <a
+              href="/#produtos"
+              className="text-gray-600 hover:text-trindata-burgundy transition-colors"
+            >
+              Produtos
+            </a>
+            <a
+              href="/projetos"
+              className="text-trindata-burgundy font-semibold"
+            >
+              Projetos
+            </a>
+            <a
+              href="/#precos"
+              className="text-gray-600 hover:text-trindata-burgundy transition-colors"
+            >
+              Preços
+            </a>
+            <a
+              href="/#contato"
+              className="text-gray-600 hover:text-trindata-burgundy transition-colors"
+            >
+              Contato
+            </a>
           </nav>
-          <Button className="bg-trindata-purple hover:bg-trindata-purple-light text-white">Começar</Button>
+          <Button className="bg-trindata-purple hover:bg-trindata-purple-light text-white">
+            Começar
+          </Button>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-10">
         <div className="mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold text-trindata-burgundy">Projetos</h1>
-          <p className="text-gray-600 mt-2">Dashboard financeiro pessoal com dados fictícios</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-trindata-burgundy">
+            Projetos
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Dashboard financeiro pessoal com dados fictícios
+          </p>
         </div>
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <SummaryCard label="Saldo" value={`R$ ${balance.toLocaleString("pt-BR")}`} delta={balance>=0?"+ estável":"- atenção"} color={balance>=0?"bg-trindata-cream text-trindata-burgundy":"bg-red-100 text-red-700"} />
-          <SummaryCard label="Entradas" value={`R$ ${totalIn.toLocaleString("pt-BR")}`} delta="+12%" color="bg-green-100 text-green-700" />
-          <SummaryCard label="Saídas" value={`R$ ${totalOut.toLocaleString("pt-BR")}`} delta="-5%" color="bg-red-100 text-red-700" />
+          <SummaryCard
+            label="Saldo"
+            value={`R$ ${balance.toLocaleString("pt-BR")}`}
+            delta={balance >= 0 ? "+ estável" : "- atenção"}
+            color={
+              balance >= 0
+                ? "bg-trindata-cream text-trindata-burgundy"
+                : "bg-red-100 text-red-700"
+            }
+          />
+          <SummaryCard
+            label="Entradas"
+            value={`R$ ${totalIn.toLocaleString("pt-BR")}`}
+            delta="+12%"
+            color="bg-green-100 text-green-700"
+          />
+          <SummaryCard
+            label="Saídas"
+            value={`R$ ${totalOut.toLocaleString("pt-BR")}`}
+            delta="-5%"
+            color="bg-red-100 text-red-700"
+          />
         </section>
 
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2 border-0 shadow-md">
             <CardHeader>
-              <CardTitle className="text-trindata-burgundy">Despesas por mês</CardTitle>
+              <CardTitle className="text-trindata-burgundy">
+                Despesas por mês
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <BarChart data={monthly} />
@@ -119,12 +231,23 @@ export default function Projetos() {
 
           <Card className="border-0 shadow-md">
             <CardHeader>
-              <CardTitle className="text-trindata-burgundy">Ações rápidas</CardTitle>
+              <CardTitle className="text-trindata-burgundy">
+                Ações rápidas
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button className="w-full bg-trindata-orange hover:bg-trindata-orange-light text-white">Adicionar transação</Button>
-              <Button variant="outline" className="w-full border-trindata-purple text-trindata-purple hover:bg-trindata-purple hover:text-white">Exportar dados</Button>
-              <Button variant="outline" className="w-full">Gerar relatório</Button>
+              <Button className="w-full bg-trindata-orange hover:bg-trindata-orange-light text-white">
+                Adicionar transação
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full border-trindata-purple text-trindata-purple hover:bg-trindata-purple hover:text-white"
+              >
+                Exportar dados
+              </Button>
+              <Button variant="outline" className="w-full">
+                Gerar relatório
+              </Button>
             </CardContent>
           </Card>
         </section>
@@ -132,7 +255,9 @@ export default function Projetos() {
         <section className="mt-8">
           <Card className="border-0 shadow-md">
             <CardHeader>
-              <CardTitle className="text-trindata-burgundy">Transações recentes</CardTitle>
+              <CardTitle className="text-trindata-burgundy">
+                Transações recentes
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-12 text-xs font-semibold text-gray-500 mb-2">
@@ -142,15 +267,25 @@ export default function Projetos() {
                 <div className="col-span-2 text-right">Valor</div>
               </div>
               <div className="divide-y divide-gray-100">
-                {transactions.map(t => (
-                  <div key={t.id} className="grid grid-cols-12 py-3 items-center text-sm">
+                {transactions.map((t) => (
+                  <div
+                    key={t.id}
+                    className="grid grid-cols-12 py-3 items-center text-sm"
+                  >
                     <div className="col-span-2 text-gray-600">{t.date}</div>
-                    <div className="col-span-5 text-trindata-burgundy font-medium">{t.desc}</div>
-                    <div className="col-span-3">
-                      <span className="inline-flex items-center rounded-full bg-gray-100 text-gray-700 px-2 py-0.5 text-xs">{t.category}</span>
+                    <div className="col-span-5 text-trindata-burgundy font-medium">
+                      {t.desc}
                     </div>
-                    <div className={`col-span-2 text-right font-semibold ${t.type==='in' ? 'text-green-600' : 'text-red-600'}`}>
-                      {t.type==='in' ? '+' : '-'} R$ {Math.abs(t.amount).toLocaleString('pt-BR')}
+                    <div className="col-span-3">
+                      <span className="inline-flex items-center rounded-full bg-gray-100 text-gray-700 px-2 py-0.5 text-xs">
+                        {t.category}
+                      </span>
+                    </div>
+                    <div
+                      className={`col-span-2 text-right font-semibold ${t.type === "in" ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {t.type === "in" ? "+" : "-"} R${" "}
+                      {Math.abs(t.amount).toLocaleString("pt-BR")}
                     </div>
                   </div>
                 ))}
