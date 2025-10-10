@@ -5,7 +5,9 @@ import { cn } from "@/lib/utils";
 
 // Some environments may cause Radix Provider to trigger hooks early and fail.
 // Provide a safe no-op TooltipProvider that accepts the same props to avoid runtime errors.
-const TooltipProvider: React.FC<React.PropsWithChildren<{ delayDuration?: number }>> = ({ children }) => {
+const TooltipProvider: React.FC<
+  React.PropsWithChildren<{ delayDuration?: number }>
+> = ({ children }) => {
   return <>{children}</>;
 };
 
