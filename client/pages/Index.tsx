@@ -1108,7 +1108,7 @@ export default function Index() {
             </p>
           </div>
 
-          <FinanceDashboard />
+          <ProjectsSection />
         </div>
       </section>
 
