@@ -945,6 +945,263 @@ function TaskDashboard() {
   );
 }
 
+// E-commerce Inventory Dashboard
+function InventoryDashboard() {
+  type Item = {
+    id: number;
+    sku: string;
+    name: string;
+    category: string;
+    stock: number;
+    reorderPoint: number;
+    weeklySales: number[]; // last 12 weeks
+  };
+
+  const categories = ["Eletrônicos", "Moda", "Casa"] as const;
+  const makeItem = (
+    id: number,
+    sku: string,
+    name: string,
+    category: typeof categories[number],
+    stock: number,
+    reorderPoint: number,
+    weeklySales: number[],
+  ): Item => ({ id, sku, name, category, stock, reorderPoint, weeklySales });
+
+  const initialItems: Item[] = [
+    makeItem(1, "EL-001", "Fone Bluetooth", "Eletrônicos", 42, 20, [9,8,7,10,6,8,7,9,8,6,7,8]),
+    makeItem(2, "EL-002", "Teclado Mecânico", "Eletrônicos", 12, 15, [3,2,4,2,3,3,2,4,3,2,2,3]),
+    makeItem(3, "MD-101", "Camiseta Básica", "Moda", 5, 25, [5,6,4,3,6,5,7,6,5,6,4,5]),
+    makeItem(4, "MD-202", "Tênis Esportivo", "Moda", 0, 10, [2,1,2,2,1,2,1,2,2,1,1,2]),
+    makeItem(5, "CS-310", "Cafeteira", "Casa", 28, 12, [2,3,2,3,2,2,3,2,3,2,2,3]),
+    makeItem(6, "CS-311", "Aspirador Robô", "Casa", 7, 10, [1,1,2,1,2,2,1,1,2,1,1,2]),
+  ];
+
+  const [items, setItems] = useState<Item[]>(initialItems);
+  const [catFilter, setCatFilter] = useState<string>("Todas");
+  const [statusFilter, setStatusFilter] = useState<string>("Todos");
+  const [query, setQuery] = useState("");
+
+  const statusOf = (it: Item) =>
+    it.stock === 0 ? "Sem estoque" : it.stock <= it.reorderPoint ? "Baixo" : "OK";
+
+  const filtered = useMemo(() => {
+    return items.filter((it) => {
+      const queryMatch =
+        !query ||
+        it.name.toLowerCase().includes(query.toLowerCase()) ||
+        it.sku.toLowerCase().includes(query.toLowerCase());
+      const catMatch = catFilter === "Todas" || it.category === catFilter;
+      const s = statusOf(it);
+      const statusMatch =
+        statusFilter === "Todos" ||
+        (statusFilter === "OK" && s === "OK") ||
+        (statusFilter === "Baixo" && s === "Baixo") ||
+        (statusFilter === "Sem estoque" && s === "Sem estoque");
+      return queryMatch && catMatch && statusMatch;
+    });
+  }, [items, catFilter, statusFilter, query]);
+
+  const totals = useMemo(() => {
+    const totalSkus = items.length;
+    const totalUnits = items.reduce((s, it) => s + it.stock, 0);
+    const low = items.filter((it) => statusOf(it) === "Baixo").length;
+    const out = items.filter((it) => statusOf(it) === "Sem estoque").length;
+    return { totalSkus, totalUnits, low, out };
+  }, [items]);
+
+  const byCategory = useMemo(() => {
+    const map = new Map<string, number>();
+    items.forEach((it) => map.set(it.category, (map.get(it.category) || 0) + it.stock));
+    return categories.map((c) => ({ categoria: c, Unidades: map.get(c) || 0 }));
+  }, [items]);
+
+  const statusData = useMemo(() => {
+    const ok = items.filter((it) => statusOf(it) === "OK").length;
+    const low = items.filter((it) => statusOf(it) === "Baixo").length;
+    const out = items.filter((it) => statusOf(it) === "Sem estoque").length;
+    return [
+      { name: "OK", value: ok },
+      { name: "Baixo", value: low },
+      { name: "Sem estoque", value: out },
+    ];
+  }, [items]);
+
+  const weeklyTotalSales = useMemo(() => {
+    const weeks = Array.from({ length: 12 }, (_, i) => i);
+    return weeks.map((i) => ({
+      semana: `S${i + 1}`,
+      Vendas: items.reduce((s, it) => s + (it.weeklySales[i] || 0), 0),
+    }));
+  }, [items]);
+
+  const restock = (id?: number) => {
+    setItems((prev) =>
+      prev.map((it) => {
+        if (id && it.id !== id) return it;
+        if (!id && statusOf(it) === "OK") return it;
+        const need = Math.max(it.reorderPoint * 2 - it.stock, 0);
+        return { ...it, stock: it.stock + (need || 10) };
+      }),
+    );
+  };
+
+  return (
+    <div>
+      {/* Filters */}
+      <Card className="border-0 shadow-md mb-6">
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="md:col-span-2">
+              <div className="text-xs font-semibold text-gray-500 mb-1">Buscar</div>
+              <Input placeholder="Nome ou SKU" value={query} onChange={(e)=>setQuery(e.target.value)} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-gray-500 mb-1">Categoria</div>
+              <Select value={catFilter} onValueChange={setCatFilter}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Todas" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Todas">Todas</SelectItem>
+                  {categories.map(c=> (<SelectItem key={c} value={c}>{c}</SelectItem>))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-gray-500 mb-1">Status</div>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Todos" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Todos">Todos</SelectItem>
+                  <SelectItem value="OK">OK</SelectItem>
+                  <SelectItem value="Baixo">Baixo</SelectItem>
+                  <SelectItem value="Sem estoque">Sem estoque</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-end">
+              <Button className="w-full bg-trindata-orange hover:bg-trindata-orange-light text-white" onClick={()=>restock()}>Repor itens com baixo estoque</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* KPIs */}
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">SKUs</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-trindata-burgundy">{totals.totalSkus}</div></CardContent></Card>
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Unidades</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-trindata-burgundy">{totals.totalUnits}</div></CardContent></Card>
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Baixo estoque</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-yellow-600">{totals.low}</div></CardContent></Card>
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Sem estoque</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-red-600">{totals.out}</div></CardContent></Card>
+      </section>
+
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <Card className="lg:col-span-2 border-0 shadow-md">
+          <CardHeader>
+            <CardTitle className="text-trindata-burgundy">Unidades por categoria</CardTitle>
+          </CardHeader>
+          <CardContent className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={byCategory}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e6ecf4" />
+                <XAxis dataKey="categoria" tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+                <YAxis tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+                <RechartsTooltip />
+                <Bar dataKey="Unidades" fill="#6C5CE7" radius={[4,4,0,0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader>
+            <CardTitle className="text-trindata-burgundy">Distribuição de status</CardTitle>
+          </CardHeader>
+          <CardContent className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={statusData} dataKey="value" nameKey="name" outerRadius={80}>
+                  {statusData.map((d, i) => (
+                    <Cell key={i} fill={["#00B894", "#E8B23A", "#F26B38"][i % 3]} />
+                  ))}
+                </Pie>
+                <RechartsTooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </section>
+
+      <Card className="border-0 shadow-md mb-6">
+        <CardHeader>
+          <CardTitle className="text-trindata-burgundy">Vendas semanais (12 semanas)</CardTitle>
+        </CardHeader>
+        <CardContent className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={weeklyTotalSales}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e6ecf4" />
+              <XAxis dataKey="semana" tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+              <YAxis tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+              <RechartsTooltip />
+              <Line type="monotone" dataKey="Vendas" stroke="#0984E3" strokeWidth={2} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-md">
+        <CardHeader>
+          <CardTitle className="text-trindata-burgundy">Inventário</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>SKU</TableHead>
+                <TableHead>Produto</TableHead>
+                <TableHead>Categoria</TableHead>
+                <TableHead className="text-right">Estoque</TableHead>
+                <TableHead className="text-right">Reposição</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Progresso</TableHead>
+                <TableHead className="text-right">Ações</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.map((it) => {
+                const status = statusOf(it);
+                const pct = Math.min(100, Math.round((it.stock / Math.max(it.reorderPoint, 1)) * 100));
+                const badgeCls =
+                  status === "OK"
+                    ? "bg-green-100 text-green-700"
+                    : status === "Baixo"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-700";
+                return (
+                  <TableRow key={it.id}>
+                    <TableCell className="font-mono text-xs">{it.sku}</TableCell>
+                    <TableCell className="text-trindata-burgundy font-medium">{it.name}</TableCell>
+                    <TableCell>{it.category}</TableCell>
+                    <TableCell className="text-right">{it.stock}</TableCell>
+                    <TableCell className="text-right">{it.reorderPoint}</TableCell>
+                    <TableCell>
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs ${badgeCls}`}>{status}</span>
+                    </TableCell>
+                    <TableCell className="w-48">
+                      <Progress value={pct} />
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="outline" onClick={()=>restock(it.id)}>Repor</Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 // Section that lets users switch between projects
 function ProjectsSection() {
   return (
