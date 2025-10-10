@@ -30,7 +30,14 @@ import {
   Area,
 } from "recharts";
 import { Progress } from "@/components/ui/progress";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 // High-quality vector tablet mockup with charts
 const MockTablet = ({
@@ -827,41 +834,64 @@ function FinanceDashboard() {
 
 // Tasks (To-do) Dashboard
 function TaskDashboard() {
-  type Task = { id: number; title: string; completed: boolean; createdAt: Date };
+  type Task = {
+    id: number;
+    title: string;
+    completed: boolean;
+    createdAt: Date;
+  };
   const [title, setTitle] = useState("");
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: "Estudar React", completed: true, createdAt: new Date() },
-    { id: 2, title: "Organizar finanças", completed: false, createdAt: new Date() },
-    { id: 3, title: "Revisar projeto", completed: false, createdAt: new Date(Date.now() - 1000*60*60*24) },
+    {
+      id: 2,
+      title: "Organizar finanças",
+      completed: false,
+      createdAt: new Date(),
+    },
+    {
+      id: 3,
+      title: "Revisar projeto",
+      completed: false,
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
+    },
   ]);
 
   const total = tasks.length;
-  const done = tasks.filter(t=>t.completed).length;
+  const done = tasks.filter((t) => t.completed).length;
   const pending = total - done;
 
   const addTask = () => {
     const t = title.trim();
     if (!t) return;
-    setTasks(prev => [{ id: Date.now(), title: t, completed: false, createdAt: new Date() }, ...prev]);
+    setTasks((prev) => [
+      { id: Date.now(), title: t, completed: false, createdAt: new Date() },
+      ...prev,
+    ]);
     setTitle("");
   };
 
   const toggleTask = (id: number, value: boolean) => {
-    setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: value } : t));
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, completed: value } : t)),
+    );
   };
 
   const last7 = Array.from({ length: 7 }).map((_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (6 - i));
-    const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    const label = d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-    const createdThatDay = tasks.filter(t => {
+    const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    const label = d.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+    });
+    const createdThatDay = tasks.filter((t) => {
       const td = t.createdAt;
-      const k = `${td.getFullYear()}-${td.getMonth()+1}-${td.getDate()}`;
+      const k = `${td.getFullYear()}-${td.getMonth() + 1}-${td.getDate()}`;
       return k === key;
     });
-    const concluidas = createdThatDay.filter(t=>t.completed).length;
-    const pendentes = createdThatDay.filter(t=>!t.completed).length;
+    const concluidas = createdThatDay.filter((t) => t.completed).length;
+    const pendentes = createdThatDay.filter((t) => !t.completed).length;
     return { dia: label, Concluídas: concluidas, Pendentes: pendentes };
   });
 
@@ -876,39 +906,99 @@ function TaskDashboard() {
     <div>
       {/* KPIs */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Tarefas</CardTitle></CardHeader><CardContent className="pt-0"><div className="flex items-end justify-between"><div className="text-3xl font-bold text-trindata-burgundy">{total}</div></div></CardContent></Card>
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Concluídas</CardTitle></CardHeader><CardContent className="pt-0"><div className="flex items-end justify-between"><div className="text-3xl font-bold text-green-700">{done}</div></div></CardContent></Card>
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Pendentes</CardTitle></CardHeader><CardContent className="pt-0"><div className="flex items-end justify-between"><div className="text-3xl font-bold text-red-600">{pending}</div></div></CardContent></Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              Tarefas
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="flex items-end justify-between">
+              <div className="text-3xl font-bold text-trindata-burgundy">
+                {total}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              Concluídas
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="flex items-end justify-between">
+              <div className="text-3xl font-bold text-green-700">{done}</div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              Pendentes
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="flex items-end justify-between">
+              <div className="text-3xl font-bold text-red-600">{pending}</div>
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <Card className="lg:col-span-2 border-0 shadow-md">
           <CardHeader>
-            <CardTitle className="text-trindata-burgundy">Tarefas criadas (últimos 7 dias)</CardTitle>
+            <CardTitle className="text-trindata-burgundy">
+              Tarefas criadas (últimos 7 dias)
+            </CardTitle>
           </CardHeader>
           <CardContent className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={last7}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e6ecf4" />
-                <XAxis dataKey="dia" tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
-                <YAxis tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+                <XAxis
+                  dataKey="dia"
+                  tickLine={false}
+                  axisLine={{ stroke: "#e6ecf4" }}
+                />
+                <YAxis tickLine={false} axisLine={{ stroke: "#e6ecf4" }} />
                 <RechartsTooltip />
                 <Legend />
-                <Bar dataKey="Concluídas" stackId="a" fill="#00B894" radius={[4,4,0,0]} />
-                <Bar dataKey="Pendentes" stackId="a" fill="#F26B38" radius={[4,4,0,0]} />
+                <Bar
+                  dataKey="Concluídas"
+                  stackId="a"
+                  fill="#00B894"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="Pendentes"
+                  stackId="a"
+                  fill="#F26B38"
+                  radius={[4, 4, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
         <Card className="border-0 shadow-md">
           <CardHeader>
-            <CardTitle className="text-trindata-burgundy">Status das tarefas</CardTitle>
+            <CardTitle className="text-trindata-burgundy">
+              Status das tarefas
+            </CardTitle>
           </CardHeader>
           <CardContent className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={80}>
-                  {pieData.map((_, i) => (<Cell key={i} fill={pieColors[i % pieColors.length]} />))}
+                <Pie
+                  data={pieData}
+                  dataKey="value"
+                  nameKey="name"
+                  outerRadius={80}
+                >
+                  {pieData.map((_, i) => (
+                    <Cell key={i} fill={pieColors[i % pieColors.length]} />
+                  ))}
                 </Pie>
                 <RechartsTooltip />
                 <Legend />
@@ -920,22 +1010,48 @@ function TaskDashboard() {
 
       <Card className="border-0 shadow-md">
         <CardHeader>
-          <CardTitle className="text-trindata-burgundy">Minha lista de tarefas</CardTitle>
+          <CardTitle className="text-trindata-burgundy">
+            Minha lista de tarefas
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-2 mb-4">
-            <Input value={title} onChange={e=>setTitle(e.target.value)} placeholder="Descreva a tarefa" onKeyDown={e=>{ if(e.key==='Enter') addTask(); }} />
-            <Button className="bg-trindata-purple hover:bg-trindata-purple-light text-white" onClick={addTask}>Adicionar</Button>
+            <Input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Descreva a tarefa"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") addTask();
+              }}
+            />
+            <Button
+              className="bg-trindata-purple hover:bg-trindata-purple-light text-white"
+              onClick={addTask}
+            >
+              Adicionar
+            </Button>
           </div>
 
           <div className="divide-y divide-gray-100">
-            {tasks.map(t => (
-              <div key={t.id} className="flex items-center justify-between py-3">
+            {tasks.map((t) => (
+              <div
+                key={t.id}
+                className="flex items-center justify-between py-3"
+              >
                 <div className="flex items-center gap-3">
-                  <Checkbox checked={t.completed} onCheckedChange={(v)=>toggleTask(t.id, Boolean(v))} />
-                  <span className={`text-sm ${t.completed ? 'line-through text-gray-400' : 'text-trindata-burgundy'}`}>{t.title}</span>
+                  <Checkbox
+                    checked={t.completed}
+                    onCheckedChange={(v) => toggleTask(t.id, Boolean(v))}
+                  />
+                  <span
+                    className={`text-sm ${t.completed ? "line-through text-gray-400" : "text-trindata-burgundy"}`}
+                  >
+                    {t.title}
+                  </span>
                 </div>
-                <span className="text-xs text-gray-500">{t.createdAt.toLocaleDateString('pt-BR')}</span>
+                <span className="text-xs text-gray-500">
+                  {t.createdAt.toLocaleDateString("pt-BR")}
+                </span>
               </div>
             ))}
           </div>
@@ -962,19 +1078,67 @@ function InventoryDashboard() {
     id: number,
     sku: string,
     name: string,
-    category: typeof categories[number],
+    category: (typeof categories)[number],
     stock: number,
     reorderPoint: number,
     weeklySales: number[],
   ): Item => ({ id, sku, name, category, stock, reorderPoint, weeklySales });
 
   const initialItems: Item[] = [
-    makeItem(1, "EL-001", "Fone Bluetooth", "Eletrônicos", 42, 20, [9,8,7,10,6,8,7,9,8,6,7,8]),
-    makeItem(2, "EL-002", "Teclado Mecânico", "Eletrônicos", 12, 15, [3,2,4,2,3,3,2,4,3,2,2,3]),
-    makeItem(3, "MD-101", "Camiseta Básica", "Moda", 5, 25, [5,6,4,3,6,5,7,6,5,6,4,5]),
-    makeItem(4, "MD-202", "Tênis Esportivo", "Moda", 0, 10, [2,1,2,2,1,2,1,2,2,1,1,2]),
-    makeItem(5, "CS-310", "Cafeteira", "Casa", 28, 12, [2,3,2,3,2,2,3,2,3,2,2,3]),
-    makeItem(6, "CS-311", "Aspirador Robô", "Casa", 7, 10, [1,1,2,1,2,2,1,1,2,1,1,2]),
+    makeItem(
+      1,
+      "EL-001",
+      "Fone Bluetooth",
+      "Eletrônicos",
+      42,
+      20,
+      [9, 8, 7, 10, 6, 8, 7, 9, 8, 6, 7, 8],
+    ),
+    makeItem(
+      2,
+      "EL-002",
+      "Teclado Mecânico",
+      "Eletrônicos",
+      12,
+      15,
+      [3, 2, 4, 2, 3, 3, 2, 4, 3, 2, 2, 3],
+    ),
+    makeItem(
+      3,
+      "MD-101",
+      "Camiseta Básica",
+      "Moda",
+      5,
+      25,
+      [5, 6, 4, 3, 6, 5, 7, 6, 5, 6, 4, 5],
+    ),
+    makeItem(
+      4,
+      "MD-202",
+      "Tênis Esportivo",
+      "Moda",
+      0,
+      10,
+      [2, 1, 2, 2, 1, 2, 1, 2, 2, 1, 1, 2],
+    ),
+    makeItem(
+      5,
+      "CS-310",
+      "Cafeteira",
+      "Casa",
+      28,
+      12,
+      [2, 3, 2, 3, 2, 2, 3, 2, 3, 2, 2, 3],
+    ),
+    makeItem(
+      6,
+      "CS-311",
+      "Aspirador Robô",
+      "Casa",
+      7,
+      10,
+      [1, 1, 2, 1, 2, 2, 1, 1, 2, 1, 1, 2],
+    ),
   ];
 
   const [items, setItems] = useState<Item[]>(initialItems);
@@ -983,7 +1147,11 @@ function InventoryDashboard() {
   const [query, setQuery] = useState("");
 
   const statusOf = (it: Item) =>
-    it.stock === 0 ? "Sem estoque" : it.stock <= it.reorderPoint ? "Baixo" : "OK";
+    it.stock === 0
+      ? "Sem estoque"
+      : it.stock <= it.reorderPoint
+        ? "Baixo"
+        : "OK";
 
   const filtered = useMemo(() => {
     return items.filter((it) => {
@@ -1012,7 +1180,9 @@ function InventoryDashboard() {
 
   const byCategory = useMemo(() => {
     const map = new Map<string, number>();
-    items.forEach((it) => map.set(it.category, (map.get(it.category) || 0) + it.stock));
+    items.forEach((it) =>
+      map.set(it.category, (map.get(it.category) || 0) + it.stock),
+    );
     return categories.map((c) => ({ categoria: c, Unidades: map.get(c) || 0 }));
   }, [items]);
 
@@ -1053,23 +1223,41 @@ function InventoryDashboard() {
         <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="md:col-span-2">
-              <div className="text-xs font-semibold text-gray-500 mb-1">Buscar</div>
-              <Input placeholder="Nome ou SKU" value={query} onChange={(e)=>setQuery(e.target.value)} />
+              <div className="text-xs font-semibold text-gray-500 mb-1">
+                Buscar
+              </div>
+              <Input
+                placeholder="Nome ou SKU"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
             </div>
             <div>
-              <div className="text-xs font-semibold text-gray-500 mb-1">Categoria</div>
+              <div className="text-xs font-semibold text-gray-500 mb-1">
+                Categoria
+              </div>
               <Select value={catFilter} onValueChange={setCatFilter}>
-                <SelectTrigger className="w-full"><SelectValue placeholder="Todas" /></SelectTrigger>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Todas" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Todas">Todas</SelectItem>
-                  {categories.map(c=> (<SelectItem key={c} value={c}>{c}</SelectItem>))}
+                  {categories.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <div className="text-xs font-semibold text-gray-500 mb-1">Status</div>
+              <div className="text-xs font-semibold text-gray-500 mb-1">
+                Status
+              </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-full"><SelectValue placeholder="Todos" /></SelectTrigger>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Todos">Todos</SelectItem>
                   <SelectItem value="OK">OK</SelectItem>
@@ -1079,7 +1267,12 @@ function InventoryDashboard() {
               </Select>
             </div>
             <div className="flex items-end">
-              <Button className="w-full bg-trindata-orange hover:bg-trindata-orange-light text-white" onClick={()=>restock()}>Repor itens com baixo estoque</Button>
+              <Button
+                className="w-full bg-trindata-orange hover:bg-trindata-orange-light text-white"
+                onClick={() => restock()}
+              >
+                Repor itens com baixo estoque
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -1087,39 +1280,97 @@ function InventoryDashboard() {
 
       {/* KPIs */}
       <section className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">SKUs</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-trindata-burgundy">{totals.totalSkus}</div></CardContent></Card>
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Unidades</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-trindata-burgundy">{totals.totalUnits}</div></CardContent></Card>
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Baixo estoque</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-yellow-600">{totals.low}</div></CardContent></Card>
-        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Sem estoque</CardTitle></CardHeader><CardContent className="pt-0"><div className="text-3xl font-bold text-red-600">{totals.out}</div></CardContent></Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              SKUs
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="text-3xl font-bold text-trindata-burgundy">
+              {totals.totalSkus}
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              Unidades
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="text-3xl font-bold text-trindata-burgundy">
+              {totals.totalUnits}
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              Baixo estoque
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="text-3xl font-bold text-yellow-600">
+              {totals.low}
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">
+              Sem estoque
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="text-3xl font-bold text-red-600">{totals.out}</div>
+          </CardContent>
+        </Card>
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <Card className="lg:col-span-2 border-0 shadow-md">
           <CardHeader>
-            <CardTitle className="text-trindata-burgundy">Unidades por categoria</CardTitle>
+            <CardTitle className="text-trindata-burgundy">
+              Unidades por categoria
+            </CardTitle>
           </CardHeader>
           <CardContent className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={byCategory}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e6ecf4" />
-                <XAxis dataKey="categoria" tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
-                <YAxis tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+                <XAxis
+                  dataKey="categoria"
+                  tickLine={false}
+                  axisLine={{ stroke: "#e6ecf4" }}
+                />
+                <YAxis tickLine={false} axisLine={{ stroke: "#e6ecf4" }} />
                 <RechartsTooltip />
-                <Bar dataKey="Unidades" fill="#6C5CE7" radius={[4,4,0,0]} />
+                <Bar dataKey="Unidades" fill="#6C5CE7" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
         <Card className="border-0 shadow-md">
           <CardHeader>
-            <CardTitle className="text-trindata-burgundy">Distribuição de status</CardTitle>
+            <CardTitle className="text-trindata-burgundy">
+              Distribuição de status
+            </CardTitle>
           </CardHeader>
           <CardContent className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={statusData} dataKey="value" nameKey="name" outerRadius={80}>
+                <Pie
+                  data={statusData}
+                  dataKey="value"
+                  nameKey="name"
+                  outerRadius={80}
+                >
                   {statusData.map((d, i) => (
-                    <Cell key={i} fill={["#00B894", "#E8B23A", "#F26B38"][i % 3]} />
+                    <Cell
+                      key={i}
+                      fill={["#00B894", "#E8B23A", "#F26B38"][i % 3]}
+                    />
                   ))}
                 </Pie>
                 <RechartsTooltip />
@@ -1132,16 +1383,28 @@ function InventoryDashboard() {
 
       <Card className="border-0 shadow-md mb-6">
         <CardHeader>
-          <CardTitle className="text-trindata-burgundy">Vendas semanais (12 semanas)</CardTitle>
+          <CardTitle className="text-trindata-burgundy">
+            Vendas semanais (12 semanas)
+          </CardTitle>
         </CardHeader>
         <CardContent className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={weeklyTotalSales}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6ecf4" />
-              <XAxis dataKey="semana" tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
-              <YAxis tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+              <XAxis
+                dataKey="semana"
+                tickLine={false}
+                axisLine={{ stroke: "#e6ecf4" }}
+              />
+              <YAxis tickLine={false} axisLine={{ stroke: "#e6ecf4" }} />
               <RechartsTooltip />
-              <Line type="monotone" dataKey="Vendas" stroke="#0984E3" strokeWidth={2} dot={false} />
+              <Line
+                type="monotone"
+                dataKey="Vendas"
+                stroke="#0984E3"
+                strokeWidth={2}
+                dot={false}
+              />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
@@ -1168,7 +1431,10 @@ function InventoryDashboard() {
             <TableBody>
               {filtered.map((it) => {
                 const status = statusOf(it);
-                const pct = Math.min(100, Math.round((it.stock / Math.max(it.reorderPoint, 1)) * 100));
+                const pct = Math.min(
+                  100,
+                  Math.round((it.stock / Math.max(it.reorderPoint, 1)) * 100),
+                );
                 const badgeCls =
                   status === "OK"
                     ? "bg-green-100 text-green-700"
@@ -1177,19 +1443,31 @@ function InventoryDashboard() {
                       : "bg-red-100 text-red-700";
                 return (
                   <TableRow key={it.id}>
-                    <TableCell className="font-mono text-xs">{it.sku}</TableCell>
-                    <TableCell className="text-trindata-burgundy font-medium">{it.name}</TableCell>
+                    <TableCell className="font-mono text-xs">
+                      {it.sku}
+                    </TableCell>
+                    <TableCell className="text-trindata-burgundy font-medium">
+                      {it.name}
+                    </TableCell>
                     <TableCell>{it.category}</TableCell>
                     <TableCell className="text-right">{it.stock}</TableCell>
-                    <TableCell className="text-right">{it.reorderPoint}</TableCell>
+                    <TableCell className="text-right">
+                      {it.reorderPoint}
+                    </TableCell>
                     <TableCell>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs ${badgeCls}`}>{status}</span>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs ${badgeCls}`}
+                      >
+                        {status}
+                      </span>
                     </TableCell>
                     <TableCell className="w-48">
                       <Progress value={pct} />
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="outline" onClick={()=>restock(it.id)}>Repor</Button>
+                      <Button variant="outline" onClick={() => restock(it.id)}>
+                        Repor
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
