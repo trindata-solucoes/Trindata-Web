@@ -29,6 +29,8 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { Progress } from "@/components/ui/progress";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 // High-quality vector tablet mockup with charts
 const MockTablet = ({
