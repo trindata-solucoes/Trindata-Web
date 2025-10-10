@@ -587,6 +587,18 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Projects (Power BI-like Dashboard) */}
+      <section id="projetos" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-6 text-center md:text-left">
+            <h2 className="text-4xl font-bold text-trindata-burgundy">Projetos</h2>
+            <p className="text-gray-600 mt-2">Dashboard financeiro pessoal com dados fictícios</p>
+          </div>
+
+          <FinanceDashboard />
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 bg-white" id="como-funciona">
         <div className="max-w-7xl mx-auto px-6">
