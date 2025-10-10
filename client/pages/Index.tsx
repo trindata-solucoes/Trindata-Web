@@ -1209,12 +1209,16 @@ function ProjectsSection() {
       <TabsList className="mb-4 flex flex-wrap gap-2">
         <TabsTrigger value="financeiro">Controle financeiro</TabsTrigger>
         <TabsTrigger value="tarefas">Lista de tarefas</TabsTrigger>
+        <TabsTrigger value="estoque">Gestão de estoque</TabsTrigger>
       </TabsList>
       <TabsContent value="financeiro">
         <FinanceDashboard />
       </TabsContent>
       <TabsContent value="tarefas">
         <TaskDashboard />
+      </TabsContent>
+      <TabsContent value="estoque">
+        <InventoryDashboard />
       </TabsContent>
     </Tabs>
   );
