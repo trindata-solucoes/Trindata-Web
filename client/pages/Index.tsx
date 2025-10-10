@@ -413,7 +413,7 @@ export default function Index() {
               Produtos
             </a>
             <a
-              href="/projetos"
+              href="#projetos"
               className="text-gray-600 hover:text-trindata-burgundy transition-colors"
             >
               Projetos
