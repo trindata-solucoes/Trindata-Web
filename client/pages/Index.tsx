@@ -823,6 +823,144 @@ function FinanceDashboard() {
   );
 }
 
+// Tasks (To-do) Dashboard
+function TaskDashboard() {
+  type Task = { id: number; title: string; completed: boolean; createdAt: Date };
+  const [title, setTitle] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: 1, title: "Estudar React", completed: true, createdAt: new Date() },
+    { id: 2, title: "Organizar finanças", completed: false, createdAt: new Date() },
+    { id: 3, title: "Revisar projeto", completed: false, createdAt: new Date(Date.now() - 1000*60*60*24) },
+  ]);
+
+  const total = tasks.length;
+  const done = tasks.filter(t=>t.completed).length;
+  const pending = total - done;
+
+  const addTask = () => {
+    const t = title.trim();
+    if (!t) return;
+    setTasks(prev => [{ id: Date.now(), title: t, completed: false, createdAt: new Date() }, ...prev]);
+    setTitle("");
+  };
+
+  const toggleTask = (id: number, value: boolean) => {
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: value } : t));
+  };
+
+  const last7 = Array.from({ length: 7 }).map((_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+    const label = d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+    const createdThatDay = tasks.filter(t => {
+      const td = t.createdAt;
+      const k = `${td.getFullYear()}-${td.getMonth()+1}-${td.getDate()}`;
+      return k === key;
+    });
+    const concluidas = createdThatDay.filter(t=>t.completed).length;
+    const pendentes = createdThatDay.filter(t=>!t.completed).length;
+    return { dia: label, Concluídas: concluidas, Pendentes: pendentes };
+  });
+
+  const pieData = [
+    { name: "Concluídas", value: done },
+    { name: "Pendentes", value: pending },
+  ];
+
+  const pieColors = ["#00B894", "#F26B38"];
+
+  return (
+    <div>
+      {/* KPIs */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Tarefas</CardTitle></CardHeader><CardContent className="pt-0"><div className="flex items-end justify-between"><div className="text-3xl font-bold text-trindata-burgundy">{total}</div></div></CardContent></Card>
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Concluídas</CardTitle></CardHeader><CardContent className="pt-0"><div className="flex items-end justify-between"><div className="text-3xl font-bold text-green-700">{done}</div></div></CardContent></Card>
+        <Card className="border-0 shadow-md"><CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-gray-500">Pendentes</CardTitle></CardHeader><CardContent className="pt-0"><div className="flex items-end justify-between"><div className="text-3xl font-bold text-red-600">{pending}</div></div></CardContent></Card>
+      </section>
+
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <Card className="lg:col-span-2 border-0 shadow-md">
+          <CardHeader>
+            <CardTitle className="text-trindata-burgundy">Tarefas criadas (últimos 7 dias)</CardTitle>
+          </CardHeader>
+          <CardContent className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={last7}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e6ecf4" />
+                <XAxis dataKey="dia" tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+                <YAxis tickLine={false} axisLine={{ stroke: '#e6ecf4' }} />
+                <RechartsTooltip />
+                <Legend />
+                <Bar dataKey="Concluídas" stackId="a" fill="#00B894" radius={[4,4,0,0]} />
+                <Bar dataKey="Pendentes" stackId="a" fill="#F26B38" radius={[4,4,0,0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-md">
+          <CardHeader>
+            <CardTitle className="text-trindata-burgundy">Status das tarefas</CardTitle>
+          </CardHeader>
+          <CardContent className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={80}>
+                  {pieData.map((_, i) => (<Cell key={i} fill={pieColors[i % pieColors.length]} />))}
+                </Pie>
+                <RechartsTooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </section>
+
+      <Card className="border-0 shadow-md">
+        <CardHeader>
+          <CardTitle className="text-trindata-burgundy">Minha lista de tarefas</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2 mb-4">
+            <Input value={title} onChange={e=>setTitle(e.target.value)} placeholder="Descreva a tarefa" onKeyDown={e=>{ if(e.key==='Enter') addTask(); }} />
+            <Button className="bg-trindata-purple hover:bg-trindata-purple-light text-white" onClick={addTask}>Adicionar</Button>
+          </div>
+
+          <div className="divide-y divide-gray-100">
+            {tasks.map(t => (
+              <div key={t.id} className="flex items-center justify-between py-3">
+                <div className="flex items-center gap-3">
+                  <Checkbox checked={t.completed} onCheckedChange={(v)=>toggleTask(t.id, Boolean(v))} />
+                  <span className={`text-sm ${t.completed ? 'line-through text-gray-400' : 'text-trindata-burgundy'}`}>{t.title}</span>
+                </div>
+                <span className="text-xs text-gray-500">{t.createdAt.toLocaleDateString('pt-BR')}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// Section that lets users switch between projects
+function ProjectsSection() {
+  return (
+    <Tabs defaultValue="financeiro" className="w-full">
+      <TabsList className="mb-4 flex flex-wrap gap-2">
+        <TabsTrigger value="financeiro">Controle financeiro</TabsTrigger>
+        <TabsTrigger value="tarefas">Lista de tarefas</TabsTrigger>
+      </TabsList>
+      <TabsContent value="financeiro">
+        <FinanceDashboard />
+      </TabsContent>
+      <TabsContent value="tarefas">
+        <TaskDashboard />
+      </TabsContent>
+    </Tabs>
+  );
+}
+
 export default function Index() {
   const [activePlan, setActivePlan] = useState("pro");
 
