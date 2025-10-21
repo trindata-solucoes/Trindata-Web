@@ -1,5 +1,5 @@
 # Top-level configuration
-name = "Trindata-Web"
+name = "novoteste"
 main = "index.html"
 compatibility_date = "2022-07-12"
 
