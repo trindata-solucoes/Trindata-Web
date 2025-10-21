@@ -1,6 +1,5 @@
 # Top-level configuration
-name = "Trindata-Web"
-main = "index.html"
+name = "Trindata-Web"npm fund
 compatibility_date = "2022-07-12"
 
 workers_dev = false
