@@ -1783,11 +1783,21 @@ export default function Index() {
               Projetos
             </h2>
             <p className="text-gray-600 mt-2">
-              Dashboard financeiro pessoal com dados fictícios
+              Visualização interativa de dados em tempo real
             </p>
           </div>
 
-          <ProjectsSection />
+          <div className="flex justify-center w-full overflow-x-auto">
+            <iframe
+              title="Wireframe"
+              width="1140"
+              height="541.25"
+              src="https://app.powerbi.com/reportEmbed?reportId=b3e096e2-9ac9-4e9e-b696-c4c3b7c79e7a&autoAuth=true&ctid=38ae2f02-5710-4e12-80bb-83600c3fdf1e"
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ border: "none", borderRadius: "8px" }}
+            />
+          </div>
         </div>
       </section>
 
